@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "92770594729",
+    "project_id": "spotswap-368806",
+    "storage_bucket": "spotswap-368806.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92770594729:android:1b75d42f4e1ccda349deb8",
+        "android_client_info": {
+          "package_name": "com.spotswap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "92770594729-giq0vsga1j67pt8jj3hgo7mpj5uhm931.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNFBGobDjMNGDFVhCzV3G6D7IAmjCNIbw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "92770594729-giq0vsga1j67pt8jj3hgo7mpj5uhm931.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "92770594729-76dnab6ent8dkhehbsjmagf59s4ttjob.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.convrtx.SpotSwap"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

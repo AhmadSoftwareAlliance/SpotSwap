@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">SpotSwap</string>
+    <string name="facebook_app_id">654542989551827</string>
+    <string name="fb_login_protocol_scheme">fb654542989551827</string>
+    <string name="facebook_client_token">dfe10ab130f8884d4835c247c48348d6</string>
+</resources>
