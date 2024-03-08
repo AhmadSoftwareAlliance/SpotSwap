@@ -248,9 +248,9 @@ export const availSpot = async params => {
       },
     });
     return res.data;
-  }catch(error){
-console.log("error",error);
-return error;
+  }catch(err){
+console.log("error",err);
+return err;
   }
  
 };

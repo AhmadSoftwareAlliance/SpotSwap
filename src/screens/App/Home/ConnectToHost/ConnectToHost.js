@@ -68,6 +68,7 @@ const ConnectToHost = ({navigation, route}) => {
   });
   const [time, setTime] = useState('');
   const [slotItem, setSlotItem] = useState('');
+  console.log("slotItem",JSON.stringify(slotItem,null,2));
   const [isLoading, setIsLoading] = useState(false);
   const [walletAmount, setWalletAmount] = useState('');
   const [isConnected, setIsConnected] = useState(false);
@@ -408,7 +409,7 @@ const ConnectToHost = ({navigation, route}) => {
         {!isConnected ? (
           <AppButton
             width={WP('65')}
-            title={'Connectttt'}
+            title={'Connect'}
             onPress={() => handleConnectButton()}
           />
         ) : (

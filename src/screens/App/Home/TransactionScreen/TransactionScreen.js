@@ -101,6 +101,7 @@ const TransactionScreen = ({navigation, route}) => {
   };
 
   const handlePayment = () => {
+    console.log("handlePayment called");
     setIsLoading(true);
     const params = new FormData();
     params.append('amount', '11');
@@ -108,10 +109,17 @@ const TransactionScreen = ({navigation, route}) => {
       availParkingSpotReq(
         params,
         res => {
-          setIsLoading(false);
-          setTimeout(() => {
-            setIsPaid(true);
-          }, 500);
+          if(res.message== "Request failed with status code 422"){
+            Alert.alert("You have Insufficient Balance in your Wallet please add first.")
+            setIsLoading(false);
+          }else{
+            console.log("res on handle payment ",JSON.stringify(res.message,null,2));
+            setIsLoading(false);
+            setTimeout(() => {
+              setIsPaid(true);
+            }, 500);
+          }
+         
         },
         err => {
           console.log("respos avail parking",err);
