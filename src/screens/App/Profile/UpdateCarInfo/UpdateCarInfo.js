@@ -230,9 +230,9 @@ const UpdateCarInfo = ({ navigation }) => {
     params.append('user_id', userInfo?.id);
     params.append('car_brand_id', values?.brand?.selectedItem?.id);
     params.append('car_model_id', values?.brandId);
-    params.append('length', values?.length);
-    params.append('width', values?.width);
-    params.append('height', values?.height);
+    params.append('length', 0);
+    params.append('width', 0);
+    params.append('height', 0);
     params.append('color', values?.color);
     params.append('plate_number', values?.plateNumber || '');
     carImages?.forEach(item => {
@@ -483,7 +483,7 @@ const UpdateCarInfo = ({ navigation }) => {
                 onBlur={() => setOpenModelPicker(false)}
               />
               <Spacer androidVal={WP('3')} iOSVal={WP('3')} />
-              <View style={styles.inputsRow}>
+              {/* <View style={styles.inputsRow}>
                 <AppInput
                   width={WP('28')}
                   renderErrorMessage
@@ -532,7 +532,7 @@ const UpdateCarInfo = ({ navigation }) => {
                   onChangeText={handleChange('height')}
                   onBlur={() => setFieldTouched('height')}
                 />
-              </View>
+              </View> */}
               <Spacer androidVal={WP('3')} iOSVal={WP('3')} />
               <DropdownPicker
                 data={colordata}

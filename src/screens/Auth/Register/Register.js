@@ -59,6 +59,7 @@ const Register = ({navigation}) => {
       signUpRequest(
         params,
         res => {
+          console.log("res on login",res);
           setIsLoading(false);
           formikRef.current?.resetForm();
           if(Platform.OS=="ios"){

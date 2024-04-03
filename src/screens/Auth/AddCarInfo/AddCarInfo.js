@@ -209,7 +209,7 @@ const AddCarInfo = ({ navigation }) => {
               onBlur={() => setOpenModelPicker(false)}
             />
             <Spacer androidVal={WP('3')} iOSVal={WP('3')} />
-            <AppInput
+            {/* <AppInput
               renderErrorMessage
               disableFullscreenUI
               value={values.length}
@@ -223,7 +223,7 @@ const AddCarInfo = ({ navigation }) => {
               placeholderTextColor={colors.g2}
               onChangeText={handleChange('length')}
               onBlur={() => setFieldTouched('length')}
-            />
+            /> */}
             <Spacer androidVal={WP('3')} iOSVal={WP('3')} />
             {/* <AppInput
               title="Color"

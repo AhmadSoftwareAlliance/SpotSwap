@@ -1,7 +1,7 @@
 import axios from 'axios';
-import {BASE_URL} from '@env';
-import {ENDPOINTS} from '../exporter';
-import {GetToken} from '../utilities/headers';
+import { BASE_URL } from '@env';
+import { ENDPOINTS } from '../exporter';
+import { GetToken } from '../utilities/headers';
 
 // Save FCM token
 export const saveToken = async params => {
@@ -22,7 +22,7 @@ export const saveToken = async params => {
 // Create spot
 export const createParkingSpot = async params => {
   // try{
-  console.log(params,">>>>spot craete",`${BASE_URL}${ENDPOINTS.CREATE_SPOT}`);
+  console.log(params, ">>>>spot craete", `${BASE_URL}${ENDPOINTS.CREATE_SPOT}`);
   const res = await axios.post(`${BASE_URL}${ENDPOINTS.CREATE_SPOT}`, params, {
     headers: {
       Accept: 'application/json',
@@ -30,18 +30,18 @@ export const createParkingSpot = async params => {
       Authorization: `Bearer ${await GetToken()}`,
     },
   });
-  console.log("res.data on craete spot",JSON.stringify(res.data,null,2));
+  console.log("res.data on craete spot", JSON.stringify(res.data, null, 2));
   return res.data;
-// }
-// catch(error) {
-// console.log("error>>>>>>>>>>>",error);
-// return error;
-// }
+  // }
+  // catch(error) {
+  // console.log("error>>>>>>>>>>>",error);
+  // return error;
+  // }
 };
 
 // Get spots
 export const getSpots = async params => {
-  console.log("getAllSpot>>>",`${BASE_URL}${ENDPOINTS.GET_ALL_SPOTS}`);
+  console.log("getAllSpot>>>", `${BASE_URL}${ENDPOINTS.GET_ALL_SPOTS}`);
   const res = await axios.post(
     `${BASE_URL}${ENDPOINTS.GET_ALL_SPOTS}`,
     params,
@@ -238,8 +238,8 @@ export const transferSpot = async params => {
 
 // Avail parking spot
 export const availSpot = async params => {
-  console.log("params",JSON.stringify(params,null,2));
-  try{
+  console.log("params", JSON.stringify(params, null, 2));
+  try {
     const res = await axios.post(`${BASE_URL}${ENDPOINTS.AVAIL_SPOT}`, params, {
       headers: {
         Accept: 'application/json',
@@ -248,11 +248,11 @@ export const availSpot = async params => {
       },
     });
     return res.data;
-  }catch(err){
-console.log("error",err);
-return err;
+  } catch (err) {
+    console.log("error", err);
+    return err;
   }
- 
+
 };
 
 // Confirm arrival
