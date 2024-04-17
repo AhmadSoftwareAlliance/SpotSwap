@@ -109,6 +109,7 @@ const TransactionScreen = ({navigation, route}) => {
       availParkingSpotReq(
         params,
         res => {
+          console.log("res.message>>",JSON.stringify(res,null,2));
           if(res.message== "Request failed with status code 422"){
             Alert.alert("You have Insufficient Balance in your Wallet please add first.")
             setIsLoading(false);

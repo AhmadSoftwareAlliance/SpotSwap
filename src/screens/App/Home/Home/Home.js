@@ -480,7 +480,7 @@ const Home = ({ navigation }) => {
           <AppButton
             width={WP('45')}
             borderColor={'transparent'}
-            title={'Make parking\nslot available'}
+            title={'Make parking\nspot available'}
             titleTxtStyle={styles.btnTxtStyle}
             onPress={() =>(userProfile?.is_info_complete?  setShowAppModal(true): Alert.alert("",'Firstly, update personal information and car details.', [
               {
