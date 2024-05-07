@@ -86,11 +86,11 @@ const Wallet = ({navigation}) => {
             height={WP('10')}
             bgColor={colors.btn_gradient}
             titleTxtStyle={styles.btnText}
-            onPress={() => (userProfile?.is_info_complete? navigation.navigate('TopUp'):Alert.alert("",'Firstly, update personal information and car details.', [
+            onPress={() => (userProfile?.profile_complete? navigation.navigate('TopUp'):Alert.alert("",'Go to settings and update Car Info first.', [
               {
                 text: 'OK',
                 onPress: () => {
-                  navigation.navigate('Settings');
+                  // navigation.navigate('Settings');
                 },
               },
             ]))}

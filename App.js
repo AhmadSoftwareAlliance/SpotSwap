@@ -27,7 +27,7 @@ LogBox.ignoreLogs([
 
 let web_client_id = Platform.OS == 'ios' ? WEB_CLIENT_ID_IOS : WEB_CLIENT_ID;
 
-console.log("STRIPE_PUBLISHABLE_KEY",STRIPE_PUBLISHABLE_KEY);
+console.log("web_client_id",web_client_id);
 // fb setup
 Settings.setAppID(FB_ID);
 Settings.initializeSDK();

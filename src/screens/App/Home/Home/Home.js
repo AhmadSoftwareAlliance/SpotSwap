@@ -39,11 +39,13 @@ import { styles } from './styles';
 
 // redux stuff
 import { useSelector, useDispatch } from 'react-redux';
+
 import {
   saveFCMTokenReq,
   getProfileRequest,
   getCarInfoRequest,
   toggleOnlineStatusRequest,
+  updateProfileRequest
 } from '../../../../redux/actions';
 
 
@@ -97,7 +99,8 @@ const Home = ({ navigation }) => {
   const { userInfo } = useSelector(state => state.auth);
   // console.log("userInfo",JSON.stringify(userInfo,null,2));
   const {carInfo,userProfile} = useSelector(state => state.profile);
-  console.log("carInfo home",JSON.stringify(carInfo,null,2));
+  // console.log("carInfo home",JSON.stringify(carInfo,null,2));
+  // console.log("userProfile at home ",JSON.stringify(userProfile,null,2));
   useEffect(() => {
     if (isFocus) {
       handleStateChange('online');
@@ -259,7 +262,7 @@ const Home = ({ navigation }) => {
       ),
     );
   };
-
+ 
   const getUserProfile = async() => {
     // setIsLoading(true);
     dispatch(
@@ -267,6 +270,7 @@ const Home = ({ navigation }) => {
         res => {
           console.log("DUCK","getUserProfile o home screen",JSON.stringify(res,null,2));
         //  getCarProfile(res?.user.id)
+      
           setIsLoading(false);
         },
         err => {
@@ -467,11 +471,11 @@ const Home = ({ navigation }) => {
             bgColor={colors.s_gradient}
             borderColor={'transparent'}
             titleTxtStyle={styles.btnTxtStyle}
-            onPress={() => (userProfile?.is_info_complete? navigation.navigate('FindSpot'): Alert.alert("",'Firstly, update personal information and car details.', [
+            onPress={() => (userProfile?.profile_complete? navigation.navigate('FindSpot'): Alert.alert("",'Go to settings and update Car Info first.', [
               {
                 text: 'OK',
                 onPress: () => {
-                  navigation.navigate('Settings');
+                  // navigation.navigate('Settings');
                 },
               },
             ]))}
@@ -482,11 +486,11 @@ const Home = ({ navigation }) => {
             borderColor={'transparent'}
             title={'Make parking\nspot available'}
             titleTxtStyle={styles.btnTxtStyle}
-            onPress={() =>(userProfile?.is_info_complete?  setShowAppModal(true): Alert.alert("",'Firstly, update personal information and car details.', [
+            onPress={() =>(userProfile?.profile_complete?  setShowAppModal(true): Alert.alert("",'Go to settings and update Car Info first.', [
               {
                 text: 'OK',
                 onPress: () => {
-                  navigation.navigate('Settings');
+                  // navigation.navigate('Settings');
                 },
               },
             ]))}

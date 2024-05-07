@@ -25,7 +25,7 @@ export const socialLogin = async params => {
       'Content-Type': 'multipart/form-data',
     },
   });
-  console.log("res",res);
+  console.log("res>>>",res);
   return res.data;
 };
 

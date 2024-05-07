@@ -285,7 +285,7 @@ const Login = ({ navigation }) => {
                 formikRef.current?.resetForm();
                 navigation.navigate('ForgotPassword');
               }}>
-              forgot your password
+              Forgot your password
             </Text>
             <Spacer androidVal={WP('11')} iOSVal={WP('11')} />
             <AppButton title="Login" onPress={() => handleSubmit()} />
@@ -328,13 +328,13 @@ const Login = ({ navigation }) => {
               )}
             </View>
             <Spacer androidVal={WP('21')} iOSVal={WP('21')} />
-            <Text style={styles.descTxtStyle}>
+            <Text style={[styles.descTxtStyle]}>
               By signing in you agree to our{' '}
-              <Text onPress={() => navigation.navigate('TermsConditions')}>
+              <Text style={{color:'#0070CF'}} onPress={() => navigation.navigate('TermsConditions')}>
                 Terms & Condition
               </Text>
               {'\n'}and{' '}
-              <Text onPress={() => navigation.navigate('PrivacyPolicy')}>
+              <Text style={{color:'#0070CF'}} onPress={() => navigation.navigate('PrivacyPolicy')}>
                 Privacy Policy{' '}
               </Text>
               Conditions

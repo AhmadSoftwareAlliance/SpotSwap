@@ -18,7 +18,7 @@ let count = 0;
 
 // redux stuff
 import {useSelector, useDispatch} from 'react-redux';
-import {getHistoryRequest} from '../../../../redux/actions';
+import {getHistoryRequest, updateProfileRequest} from '../../../../redux/actions';
 
 const Profile = ({navigation}) => {
   const isFocus = useIsFocused(null);
@@ -28,7 +28,7 @@ const Profile = ({navigation}) => {
   // redux stuff
   const dispatch = useDispatch(null);
   const {userProfile, carInfo} = useSelector(state => state.profile);
-  // console.log("userProfile>>>>>11",JSON.stringify(carInfo,null,2));
+  // console.log("userProfile> profile screen>>>>11",JSON.stringify(userProfile,null,2));
 
   useEffect(() => {
     if (isFocus) {
@@ -40,6 +40,8 @@ const Profile = ({navigation}) => {
       }
     }
   }, [isFocus]);
+
+  
 
   const getHistory = loading => {
     setIsLoading(loading);

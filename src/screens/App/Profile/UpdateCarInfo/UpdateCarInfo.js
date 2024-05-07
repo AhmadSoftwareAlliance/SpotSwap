@@ -19,6 +19,7 @@ import {
   updateCarInfoVS,
   updateCarInfoFormFields,
   appIcons,
+  carInfoVS,
 } from '../../../../shared/exporter';
 import {
   Spacer,
@@ -42,6 +43,7 @@ import {
   updateCarInfoRequest,
 } from '../../../../redux/actions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { log } from 'react-native-reanimated';
 const colordata = [
   { id: 1, name: "White" },
   { id: 1, name: "Black" },
@@ -89,6 +91,7 @@ const UpdateCarInfo = ({ navigation }) => {
   const [carBrandId, setCarBrandId] = useState('');
   const [carModelId, setCarModelId] = useState('');
   const [isChecked, setIsChecked] = useState(false);
+  console.log("isChecked",isChecked);
   const [isLoading, setIsLoading] = useState(false);
   const [carImages, setCarImages] = useState([{ img: '' }]);
   const [showAppModal, setShowAppModal] = useState(false);
@@ -126,7 +129,9 @@ const UpdateCarInfo = ({ navigation }) => {
       }
     }) || []
     setCarImages([...carImages, ...prevImgs]);
-    setIsChecked(carInfo?.is_show);
+    console.log("carInfo?.is_show",carInfo?.is_show);
+    userProfile?.profile_complete?
+    setIsChecked(carInfo?.is_show):setIsChecked(true)
   }, []);
 
   const getCarSpecs = () => {
@@ -370,7 +375,7 @@ const UpdateCarInfo = ({ navigation }) => {
         onSubmit={values => {
           userProfile?.profile_complete ? handleUpdateInfo(values) : handleSubmit(values)
         }}
-        validationSchema={updateCarInfoVS}>
+        validationSchema={userProfile?.profile_complete?updateCarInfoVS:carInfoVS}>
         {({
           values,
           errors,
@@ -381,27 +386,31 @@ const UpdateCarInfo = ({ navigation }) => {
           setFieldTouched,
         }) => {
           useEffect(async () => {
+           if(userProfile?.profile_complete){
             const Year = await AsyncStorage.getItem('year')
-            //  console.log("Year>>",Year);
-            // setCarBrandId(carInfo?.car_brand_id?carInfo?.car_brand_id:carInfo?.user_car_brand?.car_brand_id);
-            setCarBrandId(carInfo?.user_car_brands[0]?.id ? carInfo?.user_car_brands[0]?.id : carInfo?.car_brand_id);
-            // setCarModelId(carInfo?.car_model_id?carInfo?.car_model_id:carInfo?.user_car_model?.car_model_id);
-            setCarModelId(carInfo?.user_car_models[0]?.Id ? carInfo?.user_car_models[0]?.Id : carInfo?.car_model_id);
-            // setCarModels(carInfo?.user_car_models ? carInfo?.user_car_models : carInfo?.car_models);
-            // setFieldValue('brand', carInfo?.car_brand?carInfo?.car_brand:carInfo?.car_brand);
-            setFieldValue('brand', carInfo?.user_car_brands[0]?.title ? carInfo?.user_car_brands[0]?.title : carInfo?.car_brand);
-            // setFieldValue('model', carInfo?.car_model?carInfo?.car_model:carInfo?.car_model);
-            setFieldValue('model', carInfo?.user_car_models[0]?.title ? carInfo?.user_car_models[0]?.title : carInfo?.car_model);
-            // setFieldValue('length', carInfo?.car_length?.toString()?carInfo?.car_length?.toString():carInfo?.length?.toString());
-            setFieldValue('length', carInfo?.length?.toString() ? carInfo?.length?.toString() : carInfo?.car_length?.toString());
-            // setFieldValue('width', carInfo?.car_width?.toString()?carInfo?.car_width?.toString():carInfo?.width?.toString());
-            setFieldValue('width', carInfo?.width?.toString() ? carInfo?.width?.toString() : carInfo?.car_width?.toString());
-            // setFieldValue('height', carInfo?.car_height?.toString()?carInfo?.car_height?.toString():carInfo?.height?.toString());
-            setFieldValue('height', carInfo?.height?.toString() ? carInfo?.height?.toString() : carInfo?.car_height?.toString());
-            // setFieldValue('color', carInfo?.car_color?carInfo?.car_color:carInfo?.color);
-            setFieldValue('color', carInfo?.color ? carInfo?.color : carInfo?.car_color);
-            setFieldValue('plateNumber', carInfo?.plate_number || '');
-            setFieldValue('year', Year);
+            console.log("Year>>",Year);
+           // setCarBrandId(carInfo?.car_brand_id?carInfo?.car_brand_id:carInfo?.user_car_brand?.car_brand_id);
+           setCarBrandId(carInfo?.user_car_brands[0]?.id ? carInfo?.user_car_brands[0]?.id : carInfo?.car_brand_id);
+           // setCarModelId(carInfo?.car_model_id?carInfo?.car_model_id:carInfo?.user_car_model?.car_model_id);
+           setCarModelId(carInfo?.user_car_models[0]?.Id ? carInfo?.user_car_models[0]?.Id : carInfo?.car_model_id);
+           // setCarModels(carInfo?.user_car_models ? carInfo?.user_car_models : carInfo?.car_models);
+           // setFieldValue('brand', carInfo?.car_brand?carInfo?.car_brand:carInfo?.car_brand);
+           setFieldValue('brand', carInfo?.user_car_brands[0]?.title ? carInfo?.user_car_brands[0]?.title : carInfo?.car_brand);
+           // setFieldValue('model', carInfo?.car_model?carInfo?.car_model:carInfo?.car_model);
+           setFieldValue('model', carInfo?.user_car_models[0]?.title ? carInfo?.user_car_models[0]?.title : carInfo?.car_model);
+           // setFieldValue('length', carInfo?.car_length?.toString()?carInfo?.car_length?.toString():carInfo?.length?.toString());
+           setFieldValue('length', carInfo?.length?.toString() ? carInfo?.length?.toString() : carInfo?.car_length?.toString());
+           // setFieldValue('width', carInfo?.car_width?.toString()?carInfo?.car_width?.toString():carInfo?.width?.toString());
+           setFieldValue('width', carInfo?.width?.toString() ? carInfo?.width?.toString() : carInfo?.car_width?.toString());
+           // setFieldValue('height', carInfo?.car_height?.toString()?carInfo?.car_height?.toString():carInfo?.height?.toString());
+           setFieldValue('height', carInfo?.height?.toString() ? carInfo?.height?.toString() : carInfo?.car_height?.toString());
+           // setFieldValue('color', carInfo?.car_color?carInfo?.car_color:carInfo?.color);
+           setFieldValue('color', carInfo?.color ? carInfo?.color : carInfo?.car_color);
+           setFieldValue('plateNumber', carInfo?.plate_number || '');
+           
+           setFieldValue('year', Year)
+           }
+            
           }, []);
           return (
             <KeyboardAwareScrollView
@@ -414,18 +423,20 @@ const UpdateCarInfo = ({ navigation }) => {
                   setFieldValue('brand', { selectedItem });
                   // if (selectedItem?.id !== carInfo?.car_brand_id) {
                   if (selectedItem?.id !== carInfo?.car_brand?.id) {
-                    setCarModelId('');
+                    // setCarModelId('');
+                    
                     setFieldValue('length', '');
                     setFieldValue('width', '');
                     setFieldValue('height', '');
-                    setFieldValue('color', '');
+                    // setFieldValue('color', '');
                   }
                   setCarModels(selectedItem?.car_models);
                   setCarBrandId(selectedItem?.id);
                 }}
+                touched={touched.brand}
                 errorMessage={errors.brand}
                 title={'Made / Brand'}
-                touched={touched.brand}
+               
                 isPickerOpen={openBrandPicker}
                 onFocus={() => setOpenBrandPicker(true)}
                 onBlur={() => setOpenBrandPicker(false)}
@@ -436,15 +447,17 @@ const UpdateCarInfo = ({ navigation }) => {
                 data={carModels}
                 onSelect={(selectedItem, index) => {
                   setFieldValue('model', { selectedItem });
-                  setCarModelId('');
+                  setFieldValue('year', "Select Models")
+                  // setCarModelId('');
                   // setFieldValue('length', selectedItem?.length.toString());
                   // setFieldValue('width', selectedItem?.width.toString());
                   // setFieldValue('height', selectedItem?.height.toString());
                   // setFieldValue('color', selectedItem?.color.toString());
                 }}
-                errorMessage={''}
-                title={'Car Model'}
                 touched={touched.model}
+                errorMessage={errors.model}
+                title={'Car Model'}
+                
                 isPickerOpen={openModelPicker}
                 onFocus={() => setOpenModelPicker(true)}
                 onBlur={() => setOpenModelPicker(false)}
@@ -455,24 +468,28 @@ const UpdateCarInfo = ({ navigation }) => {
                 }
               />
               <Spacer androidVal={WP('3')} iOSVal={WP('3')} />
+              
               <DropdownPicker
                 data={modaldata}
                 onSelect={(selectedItem, index) => {
-                  AsyncStorage.setItem('year', selectedItem?.name)
-                  setFieldValue('year', { selectedItem });
+                  console.log("selectedItem year",selectedItem);
+                  AsyncStorage.setItem('year', selectedItem.name)
+                  setFieldValue('year', { selectedItem});
                   const year = values?.model?.selectedItem?.released_years?.find(item => item?.released_year == selectedItem?.name) > -1
                     || values?.model?.selectedItem?.released_years[0]
-                  console.log('yearr', year)
+                 
                   if (year) {
+                    console.log("yearyearyear",year);
                     setFieldValue('brandId', year?.id)
                     setFieldValue('length', year?.length?.toString());
                     setFieldValue('width', year?.width?.toString());
                     setFieldValue('height', year?.height?.toString());
-                    setFieldValue('color', year?.color?.toString());
+                    // setFieldValue('color', year?.color?.toString());
                   }
                 }}
                 title={'Models year'}
-                errorMessage={false}
+                touched={touched.year}
+                errorMessage={errors.year}
                 isPickerOpen={openModelPicker}
                 defaultButtonText={
                   values
@@ -540,8 +557,8 @@ const UpdateCarInfo = ({ navigation }) => {
                   setFieldValue('color', selectedItem?.name);
                 }}
                 title={'Color'}
-                // touched={touched.model}
-                errorMessage={false}
+                touched={touched.color}
+                errorMessage={errors.color}
                 isPickerOpen={openModelPicker}
                 // defaultButtonText="Select Color"
                 defaultButtonText={

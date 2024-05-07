@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {
   Text,
   Image,
@@ -18,11 +18,18 @@ import styles from './styles';
 
 // redux stuff
 import {useSelector, useDispatch} from 'react-redux';
-import {logoutRequset, deleteAccountReq} from '../../../../redux/actions';
-
+import {logoutRequset, deleteAccountReq, updateProfileRequest} from '../../../../redux/actions';
+import {useIsFocused} from '@react-navigation/core';
 const Settings = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
-
+  const isFocus = useIsFocused(null);
+  useEffect(() => {
+    if (isFocus) {
+      !userProfile?.is_info_complete?
+      handleUpdateInfo():null
+     
+    }
+  }, [isFocus]);
   // redux stuff
   const dispatch = useDispatch(null);
   const {userInfo} = useSelector(state => state.auth);
@@ -58,7 +65,36 @@ const Settings = ({navigation}) => {
       {text: 'Delete', onPress: () => deleteAccount()},
     ]);
   };
-
+  const handleUpdateInfo =async() => {
+    console.log("handleUpdateInfo called");
+    setIsLoading(true);
+    const params = new FormData();
+    params.append('name', userProfile?.name);
+    params.append('email', userProfile?.email);
+    params.append('contact', userProfile?.contact);
+    params.append('country_code', userProfile?.country_code);
+    // if (personImage) {
+    //   params.append('image', {
+    //     name: personImage?.filename || 'image',
+    //     uri: personImage?.path,
+    //     type: personImage?.mime,
+    //   });
+    // }
+    dispatch(
+      updateProfileRequest(
+        params,
+        res => {
+          console.log("updateProfileRequest home>>",JSON.stringify(res,null,2));
+          setIsLoading(false);
+        },
+        err => {
+          console.log("updateProfileRequest home error>>",JSON.stringify(err,null,2));
+          setIsLoading(false);
+         
+        },
+      ),
+    );
+  };
   const deleteAccount = () => {
     console.log(">>>>1",userInfo?.id);
     setIsLoading(true);
@@ -93,11 +129,11 @@ const Settings = ({navigation}) => {
           } else if (item?.screen === 'LogOut') {
             handleLogout();
           }else if(item?.screen=="UpdateCarInfo"){
-              (userProfile?.is_info_complete? navigation.navigate(item?.screen):Alert.alert("",'Firstly, update personal information', [
+              (userProfile?.is_info_complete? navigation.navigate(item?.screen):Alert.alert("",'Go to settings and update Car Info first.', [
                 {
                   text: 'OK',
                   onPress: () => {
-                    navigation.navigate('PersonalInfo');
+                    // navigation.navigate('PersonalInfo');
                   },
                 },
               ]))

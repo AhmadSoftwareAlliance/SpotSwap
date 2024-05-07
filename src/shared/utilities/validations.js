@@ -24,6 +24,7 @@ export const socialRegisterFormFields = {
 export const carInfoFormFields = {
   brand: '',
   model: '',
+  year: '',
   color: '',
   length: '',
   width: '',
@@ -49,6 +50,7 @@ export const personalInfoFormFields = {
 export const updateCarInfoFormFields = {
   brand: '',
   model: '',
+  year: '',
   color: '',
   width: '',
   length: '',
@@ -157,6 +159,7 @@ export const socialRegisterVS = yup.object().shape({
 export const carInfoVS = yup.object().shape({
   brand: yup.object().shape().required('Brand Required'),
   model: yup.object().shape().required('Model Required'),
+  year: yup.object().shape().nullable('Year Required'),
   length: yup.number().typeError('Invalid length').required('Length Required'),
   width: yup.number().typeError('Invalid width').required('Width Required'),
   height: yup.number().typeError('Invalid height').required('Height Required'),
@@ -170,6 +173,7 @@ export const carInfoVS = yup.object().shape({
 export const updateCarInfoVS = yup.object().shape({
   brand: yup.object().shape().nullable('Brand Required'),
   model: yup.object().shape().nullable('Model Required'),
+  year: yup.object().shape().nullable('Year Required'),
   length: yup.number().typeError('Invalid length').required('Length Required'),
   width: yup.number().typeError('Invalid width').required('Width Required'),
   height: yup.number().typeError('Invalid height').required('Height Required'),
