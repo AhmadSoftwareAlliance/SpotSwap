@@ -68,7 +68,7 @@ const PrivacyPolicy = ({navigation}) => {
         'privacy_policy',
         res => {
           setIsLoading(false);
-          console.log("privacy_policy",res?.page?.content);
+          console.log("privacy_policy>>>>",res?.page?.content);
           setPolicy(res?.page?.content);
         },
         err => {

@@ -108,6 +108,7 @@ const TermsConditions = ({navigation}) => {
         'terms&condition',
         res => {
           setIsLoading(false);
+          console.log("trem and condition >>>>",res?.page?.content);
           setTerms(res?.page?.content);
         },
         err => {
