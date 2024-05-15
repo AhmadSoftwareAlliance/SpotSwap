@@ -132,14 +132,17 @@ def reactNativeArchitectures() {
 android {
     ndkVersion rootProject.ext.ndkVersion
 
-    compileSdkVersion rootProject.ext.compileSdkVersion
+//    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.spotswap"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4
-        versionName "2.4"
+//        minSdkVersion rootProject.ext.minSdkVersion
+//        targetSdkVersion rootProject.ext.targestSdkVersion
+        targetSdk 34
+        minSdk 21
+        versionCode 12
+        versionName "12"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
 
         if (isNewArchitectureEnabled()) {
