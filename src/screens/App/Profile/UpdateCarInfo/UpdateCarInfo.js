@@ -103,7 +103,7 @@ const UpdateCarInfo = ({ navigation }) => {
   const dispatch = useDispatch(null);
   const { userInfo } = useSelector(state => state.auth);
   const { carInfo, userProfile } = useSelector(state => state.profile);
-  // console.log("carInfo>>>>>>",JSON.stringify(carInfo,null,2));
+  console.log("carInfo>>>>>>",JSON.stringify(carInfo,null,2));
   useEffect(() => {
     // const car_models = []
     // carInfo?.user_car_models?.forEach(ite => {
@@ -253,6 +253,8 @@ const UpdateCarInfo = ({ navigation }) => {
       createCarProfileRequest(
         params,
         res => {
+
+          console.log("res>>> on submint",JSON.stringify(res,null,2));
           setIsLoading(false)
           getUserProfile()
           getCarProfile(res?.profile.car_detail_id)

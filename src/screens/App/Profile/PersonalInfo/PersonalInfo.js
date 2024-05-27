@@ -42,10 +42,10 @@ const PersonalInfo = ({navigation}) => {
   // redux stuff
   const dispatch = useDispatch(null);
   const {userProfile} = useSelector(state => state.profile);
-  console.log("userProfile",JSON.stringify(userProfile,null,2));
+  // console.log("userProfile>>>>>>on presonal info",JSON.stringify(userProfile?.country_code,null,2));s
 
   useLayoutEffect(() => {
-    setCountryCode(userProfile?.country_code);
+    setCountryCode(userProfile?.country_code!=null?userProfile?.country_code:"1");
   }, []);
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const PersonalInfo = ({navigation}) => {
     dispatch(
       updateProfileRequest(
         params,
-        res => {
+        res => {console.log("res on update profile?>>",JSON.stringify(res,null,2));
           setIsLoading(false);
           setTimeout(() => {
             setShowAppModal(true);
@@ -129,7 +129,6 @@ const PersonalInfo = ({navigation}) => {
     <ImageBackground style={styles.rootContainer} source={appImages.app_bg}>
       <AppLoader loading={isLoading} />
       <AppHeader
-        title="Personal Information"
         onBackPress={() => navigation.goBack()}
       />
       <Formik
@@ -149,10 +148,10 @@ const PersonalInfo = ({navigation}) => {
           setFieldTouched,
         }) => {
           useEffect(() => {
-            const {name, email, contact} = userProfile;
-            setFieldValue('name', name);
-            setFieldValue('email', email);
-            setFieldValue('number', contact);
+            // const {name, email, contact} = userProfile;
+            setFieldValue('name', userProfile?.name);
+            setFieldValue('email', userProfile?.email);
+            setFieldValue('number', userProfile?.contact);
           }, []);
           return (
             <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>

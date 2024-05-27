@@ -58,7 +58,7 @@ const getFcmToken = async () => {
           console.log(' +++++ ERROR +++++ ' + error);
         });
     } catch (err) {
-      console.log(err);
+      console.log(">>",err);
     }
   } else {
     console.log("oldToken", oldToken);
@@ -67,6 +67,7 @@ const getFcmToken = async () => {
 };
 
 export const NotificationListener = navigation => {
+  console.log('NotificationListener')
   // When the application is running, but in the background
   messaging().onNotificationOpenedApp(async remoteMessage => {
     console.log('Background State Notification');
@@ -76,6 +77,7 @@ export const NotificationListener = navigation => {
   messaging().onMessage(async remoteMessage => {
     console.log('Foreground State Notification');
     if(Platform.OS=="ios"){
+      console.log("Foreground State Notification ios ios");
       onClickNotification(remoteMessage, navigation);
     }else{
       LocalNotification(remoteMessage, navigation);

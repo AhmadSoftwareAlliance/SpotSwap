@@ -25,7 +25,7 @@ const Settings = ({navigation}) => {
   const isFocus = useIsFocused(null);
   useEffect(() => {
     if (isFocus) {
-      !userProfile?.is_info_complete?
+      !userProfile?.is_info_complete&&userProfile?.profile_type!="social login"?
       handleUpdateInfo():null
      
     }
@@ -34,6 +34,7 @@ const Settings = ({navigation}) => {
   const dispatch = useDispatch(null);
   const {userInfo} = useSelector(state => state.auth);
   const { carInfo, userProfile } = useSelector(state => state.profile);
+  console.log("userProfile>>>>setting screen",JSON.stringify(userProfile,null,2));
   const handleLogout = () => {
     // setIsLoading(true);
     dispatch(
@@ -117,7 +118,7 @@ const Settings = ({navigation}) => {
   };
 
   const Row = ({item}) => {
-    console.log("item>>",item);
+    // console.log("item>>",item);
     return (
       <TouchableOpacity
         key={item?.id}
@@ -129,7 +130,8 @@ const Settings = ({navigation}) => {
           } else if (item?.screen === 'LogOut') {
             handleLogout();
           }else if(item?.screen=="UpdateCarInfo"){
-              (userProfile?.is_info_complete? navigation.navigate(item?.screen):Alert.alert("",'Go to settings and update Car Info first.', [
+              // (!userProfile?.is_info_complete&&userProfile?.profile_type=="social login"? navigation.navigate(item?.screen):Alert.alert("",'Update personal info first.', [
+              (userProfile?.is_info_complete? navigation.navigate(item?.screen):Alert.alert("",'Update personal info first.', [
                 {
                   text: 'OK',
                   onPress: () => {

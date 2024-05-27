@@ -59,10 +59,10 @@ function* updateProfile(params) {
       params?.cbSuccess(res);
     }
   } catch (error) {
-    yield put({
-      type: types.UPDATE_PROFILE_REQUEST_FAILURE,
-      payload: null,
-    });
+    // yield put({
+    //   type: types.UPDATE_PROFILE_REQUEST_FAILURE,
+    //   payload: null,
+    // });
     let msg = responseValidator(error?.response?.status, error?.response?.data);
     params?.cbFailure(msg);
   }
