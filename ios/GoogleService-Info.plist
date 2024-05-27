@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>92770594729-76dnab6ent8dkhehbsjmagf59s4ttjob.apps.googleusercontent.com</string>
+	<string>647435031260-mej7j6r56eqjitikif7jfket04tc6v94.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.92770594729-76dnab6ent8dkhehbsjmagf59s4ttjob</string>
+	<string>com.googleusercontent.apps.647435031260-mej7j6r56eqjitikif7jfket04tc6v94</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>92770594729-h1jsh53jsiffrlnn2qmc1kcbqm6v9uoe.apps.googleusercontent.com</string>
+	<string>647435031260-g12iq1hf46rn9ith1q4os9agu9lr80do.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBclnOIDKAq4KextoTdRpAAAgW_psRKrmc</string>
+	<string>AIzaSyCmss7sBQOMMpln0OHiWN_ReMM8jINbn5o</string>
 	<key>GCM_SENDER_ID</key>
-	<string>92770594729</string>
+	<string>647435031260</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.convrtx.SpotSwap</string>
 	<key>PROJECT_ID</key>
-	<string>spotswap-368806</string>
+	<string>spotswap-25ad9</string>
 	<key>STORAGE_BUCKET</key>
-	<string>spotswap-368806.appspot.com</string>
+	<string>spotswap-25ad9.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:92770594729:ios:a9193e4813f8f79949deb8</string>
+	<string>1:647435031260:ios:519acd3bc463463a265a19</string>
 </dict>
 </plist>
