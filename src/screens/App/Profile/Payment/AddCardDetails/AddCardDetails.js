@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {View, Text, ImageBackground} from 'react-native';
+import {View, Text, ImageBackground, Alert} from 'react-native';
 import {Formik} from 'formik';
 import {CardField, createToken} from '@stripe/stripe-react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -38,6 +38,7 @@ const AddCardDetails = ({navigation}) => {
       type: 'Card',
       setupFutureUsage: 'OffSession',
     });
+    console.log("data token",data);
     if (data?.token?.id) {
       var params = new FormData();
       params.append('name', values?.name);
@@ -61,6 +62,7 @@ const AddCardDetails = ({navigation}) => {
     } else {
       setIsLoading(false);
       setCardInfoError('Card Information Required');
+      Alert.alert(data?.error.localizedMessage)
     }
   };
 

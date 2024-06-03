@@ -181,7 +181,7 @@ const FindSpot = ({navigation}) => {
         <AppButton
           width={WP('65')}
           title={'Find Spot'}
-          onPress={() =>parkingSlots.length==0?Alert.alert("Slot not available"): getLocation()}
+          onPress={() =>parkingSlots.length==0?Alert.alert("Spot not available"): getLocation()}
         />
       </View>
     </ImageBackground>
