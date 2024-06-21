@@ -8,8 +8,10 @@ import {
   appIcons,
   checkBrand,
 } from '../../shared/exporter';
+import { log } from 'react-native-reanimated';
 
 export const PaymentCard = ({item, index, onPressItem}) => {
+  console.log("item>>>pamebt card",JSON.stringify(item,null,2));
   let brandLogo =
     item?.payment_type === 'paypal'
       ? appIcons.PayPalIcon

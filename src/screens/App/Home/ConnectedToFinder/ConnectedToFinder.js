@@ -204,6 +204,7 @@ const ConnectedToFinder = ({navigation, route}) => {
   };
 
   const handleTransferSlot = () => {
+    console.log(" connectionRes?.swapper_host_connection_id", connectionRes?.swapper_host_connection_id);
     if (isOkay) {
       setShowAppModal(false);
       setIsOkay(false);

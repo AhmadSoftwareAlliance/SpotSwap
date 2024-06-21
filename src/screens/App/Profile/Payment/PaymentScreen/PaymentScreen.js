@@ -36,6 +36,7 @@ const PaymentScreen = ({navigation}) => {
   const [payPalAcc, setPayPalAcc] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showAppModal, setShowAppModal] = useState(false);
+  console.log("data on payment screen",JSON.stringify(data,null,2));
 
   // redux stuff
   const dispatch = useDispatch(null);
@@ -63,6 +64,7 @@ const PaymentScreen = ({navigation}) => {
   };
 
   const defaultPayMethod = ({id, payment_type}) => {
+    console.log("payment_type",payment_type);
     setIsLoading(true);
     const params = new FormData();
     if (payment_type === 'credit_card') {

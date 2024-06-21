@@ -268,7 +268,7 @@ const ConnectToHost = ({navigation, route}) => {
     }
     Linking.openURL(number);
   };
-
+  const total = (slotItem?.parking_slot?.fees ) + (slotItem?.parking_slot?.amount);
   return (
     <ImageBackground style={styles.rootContainer} source={appImages.app_bg}>
       <AppLoader loading={isLoading} />
@@ -385,6 +385,7 @@ const ConnectToHost = ({navigation, route}) => {
       </View>
       <View style={styles.bottomView}>
         <View style={styles.boxContainer}>
+          <Text style={styles.etaTxtStyle2}>Spot Fare ${total}</Text>
           <Text style={styles.etaTxtStyle}>ETA</Text>
           <Text style={styles.timeTxtStyle}>{time ? time : '00:00:00'}</Text>
           {isConnected && (

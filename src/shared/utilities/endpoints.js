@@ -59,6 +59,7 @@ export const ENDPOINTS = {
   WALLET_DETAILS: 'wallets/get_wallet_detail',
   GET_LINK: 'stripe_connects/user_stripe_connect_account',
   TOP_UP: 'wallets/add_amount_to_wallet',
+  WITH_DRAW: 'wallets/withdraw_amount_from_wallet',
   DEFAULT_PAY_METHOD: 'cards/make_payment_default',
   ADD_PAYPAL_ACCOUNT: 'pay_pal/create_paypal_customer_account',
   SAVE_PAYPAL_ACCOUNT: 'pay_pal/save_paypal_account_details',

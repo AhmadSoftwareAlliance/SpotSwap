@@ -113,6 +113,14 @@ export const styles = StyleSheet.create({
     paddingBottom: WP('1'),
     fontFamily: family.SFProText_Regular,
   },
+  etaTxtStyle2: {
+    maxWidth: '75%',
+    alignSelf: 'center',
+    color: colors.white,
+    fontSize: size.h6,
+    paddingBottom: WP('2'),
+    fontFamily: family.SFProText_SemiBold,
+  },
   timeTxtStyle: {
     fontSize: size.h5,
     alignSelf: 'center',

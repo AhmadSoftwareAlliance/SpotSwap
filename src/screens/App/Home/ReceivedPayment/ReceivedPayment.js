@@ -13,6 +13,7 @@ import styles from './styles';
 
 const ReceivedPayment = ({navigation, route}) => {
   const [data, setData] = useState('');
+  console.log("ReceivedPayment data",JSON.stringify(data,null,2));
 
   useEffect(() => {
     setData(route?.params?.item);
@@ -65,9 +66,9 @@ const ReceivedPayment = ({navigation, route}) => {
         <Row title="Location" val={data?.connection_location} />
       </View>
       <View style={styles.boxView}>
-        <Row title="Swapper Fee" val="$10.00" />
-        <Row title="SpotSwap Fee" val="$1.00" />
-        <Row title="Total" val="$11.00" />
+        {/* <Row title="Swapper Fee" val="$10.00" />
+        <Row title="SpotSwap Fee" val="$1.00" /> */}
+        <Row title="Total" val={`$${data?.swapper_fee}`} />
       </View>
     </ImageBackground>
   );

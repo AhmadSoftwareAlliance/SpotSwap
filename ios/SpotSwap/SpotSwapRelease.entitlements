@@ -13,5 +13,9 @@
 		<string>applinks:spotswap.page.link</string>
 		<string>https://spotswap.page.link</string>
 	</array>
+	<key>com.apple.developer.in-app-payments</key>
+	<array>
+		<string>merchant.com.SpotSwap</string>
+	</array>
 </dict>
 </plist>

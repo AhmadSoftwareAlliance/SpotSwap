@@ -68,6 +68,7 @@ import {
   getWalletDetailsRequest,
   getLinkRequest,
   topUpRequest,
+  withDrawRequest,
   defaultPayMethodReq,
   addPayPalAccountReq,
   savePayPalAccountReq,
@@ -134,6 +135,7 @@ export function* rootSaga() {
   yield fork(getWalletDetailsRequest);
   yield fork(getLinkRequest);
   yield fork(topUpRequest);
+  yield fork(withDrawRequest);
   yield fork(defaultPayMethodReq);
   yield fork(addPayPalAccountReq);
   yield fork(savePayPalAccountReq);

@@ -37,7 +37,7 @@ const TransactionScreen = ({navigation, route}) => {
   const [approvalURL, setApprovalURL] = useState('');
   const [showAppModal, setShowAppModal] = useState(false);
   const [availableModal, setAvailableModal] = useState(false);
-
+console.log("data on transection screen",JSON.stringify(data,null,2));
   // redux stuff
   const dispatch = useDispatch(null);
 
@@ -104,7 +104,7 @@ const TransactionScreen = ({navigation, route}) => {
     console.log("handlePayment called");
     setIsLoading(true);
     const params = new FormData();
-    params.append('amount', '11');
+    params.append('amount', '');
     dispatch(
       availParkingSpotReq(
         params,
@@ -240,7 +240,7 @@ const TransactionScreen = ({navigation, route}) => {
       ),
     );
   };
-
+  const total = (data?.fees ) + (data?.amount);
   return approvalURL ? (
     <SafeAreaView style={styles.webViewContainer}>
       <WebView
@@ -291,9 +291,9 @@ const TransactionScreen = ({navigation, route}) => {
             <Row title="Location" val={address} />
           </View>
           <View style={styles.boxView}>
-            <Row title="Swapper Fee" val="$10.00" />
-            <Row title="SpotSwap Fee" val="$1.00" />
-            <Row title="Total" val="$11.00" />
+            {/* <Row title="Swapper Fee" val="$10.00" />
+            <Row title="SpotSwap Fee" val="$1.00" /> */}
+            <Row title="Total" val={`$${total}`} />
           </View>
         </View>
       </KeyboardAwareScrollView>
@@ -302,7 +302,7 @@ const TransactionScreen = ({navigation, route}) => {
           <AppButton title="Done" onPress={() => setShowAppModal(true)} />
         ) : (
           <AppButton
-            title="Pay $11.00"
+            title={`Pay $${total}`}
             onPress={() => {
               paymentType === 'paypal'
                 ? handlePayPalPayment()

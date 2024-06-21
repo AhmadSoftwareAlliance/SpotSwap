@@ -13,6 +13,7 @@ import {
   savePayPalAcc,
   defaultMethod,
   walletDetails,
+  withDraw,
 } from '../../../shared/service/PaymentServices';
 import * as types from '../../actions/types/payment_types';
 
@@ -177,6 +178,29 @@ function* topUpReq(params) {
   } catch (error) {
     yield put({
       type: types.TOP_UP_REQUEST_FAILURE,
+      payload: null,
+    });
+    let msg = responseValidator(error?.response?.status, error?.response?.data);
+    params?.cbFailure(msg);
+  }
+}
+// ************* With drwa Saga **************
+export function* withDrawRequest() {
+  yield takeLatest(types.WITH_DRAW_REQUEST, withDrawReq);
+}
+function* withDrawReq(params) {
+  try {
+    const res = yield withDraw(params?.params);
+    if (res) {
+      yield put({
+        type: types.WITH_DRAW_REQUEST_SUCCESS,
+        payload: res,
+      });
+      params?.cbSuccess(res);
+    }
+  } catch (error) {
+    yield put({
+      type: types.WITH_DRAW_REQUEST_FAILURE,
       payload: null,
     });
     let msg = responseValidator(error?.response?.status, error?.response?.data);

@@ -66,6 +66,7 @@ export {
   getWalletDetailsRequest,
   getLinkRequest,
   topUpRequest,
+  withDrawRequest,
   defaultPayMethodReq,
   addPayPalAccountReq,
   savePayPalAccountReq,

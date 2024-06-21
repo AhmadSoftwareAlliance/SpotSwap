@@ -15,8 +15,9 @@ import {
   descVs,
   appImages,
   descFormField,
+  topUpField
 } from '../../../../shared/exporter';
-import {Spacer, AppButton, AppHeader, AppLoader} from '../../../../components';
+import {Spacer, AppButton, AppHeader, AppLoader, AppInput} from '../../../../components';
 import styles from './styles';
 
 // redux stuff
@@ -40,6 +41,7 @@ const AddDescription = ({navigation, route}) => {
     params.append('longitude', longitude);
     params.append('address', address || 'Address is not found');
     params.append('description', values?.discription);
+    params.append('amount', values?.amount);
     if (carImage) {
       params.append('image', {
         uri: Platform.OS === 'ios' ? carImage?.path : carImage?.path,
@@ -67,7 +69,12 @@ const AddDescription = ({navigation, route}) => {
           console.log('Error ==>1111 ', err);
           if (
             err ===
-            'You have not any Account Setup for Payment , Please Add it first.'
+            'You have not any Account Setup for Payment , Please Add it first.'||
+            err ===
+            'Your Stripe Connect Account data is missing or invalid, Please provide valid data.' ||
+          err ===
+            'Your Account status is Pending. Please wait, it may take a few minutes.' ||
+          err === 'Please Complete your Account Details.'
           ) {
             Alert.alert('Failure', err, [
               {text: 'Cancel'},
@@ -104,6 +111,7 @@ const AddDescription = ({navigation, route}) => {
           handleBlur,
           handleSubmit,
           handleChange,
+          setFieldTouched,
         }) => (
           <KeyboardAwareScrollView
             showsVerticalScrollIndicator={false}
@@ -111,6 +119,18 @@ const AddDescription = ({navigation, route}) => {
             <View style={styles.contentContainer}>
               <Text style={styles.titleText}>Add Description</Text>
               <Spacer androidVal={WP('3')} iOSVal={WP('3')} />
+              <AppInput
+                placeholder="Enter Amount"
+                title="Enter Amount"
+                phTextColor={colors.white}
+                touched={touched.amount}
+                errorMessage={errors.amount}
+                renderErrorMessage
+                onBlur={() => setFieldTouched('amount')}
+                value={values.amount}
+                onChangeText={handleChange('amount')}
+              />
+               <Spacer androidVal={WP('3')} iOSVal={WP('3')} />
               <Text style={styles.msgText}>Optional</Text>
               <View style={styles.inputView}>
                 <TextInput
@@ -127,6 +147,7 @@ const AddDescription = ({navigation, route}) => {
                 <Text style={styles.errorText}>{errors.discription}</Text>
               ) : null}
               <Spacer androidVal={WP('25')} iOSVal={WP('25')} />
+              
             </View>
             <View style={styles.bottomView}>
               <AppButton title="Save" onPress={() => handleSubmit()} />

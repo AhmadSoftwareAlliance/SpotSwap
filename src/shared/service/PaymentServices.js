@@ -85,6 +85,17 @@ export const topUp = async params => {
   });
   return res.data;
 };
+// with draw
+export const withDraw = async params => {
+  const res = await axios.post(`${BASE_URL}${ENDPOINTS.WITH_DRAW}`, params, {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${await GetToken()}`,
+    },
+  });
+  return res.data;
+};
 
 // default pay method
 export const defaultMethod = async params => {

@@ -25,22 +25,36 @@ import styles from './styles';
 // redux stuff
 import {useDispatch} from 'react-redux';
 import {topUpRequest} from '../../../../redux/actions';
+import {PlatformPay, PlatformPayButton, usePlatformPay} from '@stripe/stripe-react-native';
+import { GetToken } from '../../../../shared/utilities/headers';
 
 const TopUp = ({navigation}) => {
   const formikRef = useRef();
   const isFocus = useIsFocused(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showAppModal, setShowAppModal] = useState(false);
-
+  const [isAmount, setIsAmount] = useState("");
+  const [isSport, setIsSpoprt] = useState("");
+  console.log("isAmount",isAmount);
+  const {
+    isPlatformPaySupported,
+    confirmPlatformPayPayment,
+  } = usePlatformPay();
   // redux stuff
   const dispatch = useDispatch(null);
-
+ 
   useEffect(() => {
     getAppLaunchLink();
     const unsubscribe = dynamicLinks().onLink(handleDynamicLink);
     return () => unsubscribe();
   }, [isFocus]);
-
+    React.useEffect(() => {
+    (async () => {
+      const supported = await isPlatformPaySupported();
+      setIsSpoprt(supported)
+      console.log('Platform Pay Supported:', supported);
+    })();
+  }, []);
   const getAppLaunchLink = () => {
     dynamicLinks()
       .getInitialLink()
@@ -67,11 +81,13 @@ const TopUp = ({navigation}) => {
     params.append('amount', values?.amount);
     params.append('referrer_code', values?.referralCode);
     const onSuccess = res => {
+      console.log("res on topup",JSON.stringify(res,null,2));
       setIsLoading(false);
       formikRef.current?.resetForm();
-      setTimeout(() => {
-        setShowAppModal(true);
-      }, 500);
+         pay(res?.topup_response?.client_secret,values?.amount)
+      // setTimeout(() => {
+      //   setShowAppModal(true);
+      // }, 500);
     };
     const onFailure = err => {
       console.log('Error ==> ', err);
@@ -100,6 +116,126 @@ const TopUp = ({navigation}) => {
     };
     dispatch(topUpRequest(params, onSuccess, onFailure));
   };
+  const fetchPaymentIntentClientSecret = async (amount) => {
+    console.log("fetchPaymentIntentClientSecret amount",amount);
+    try {
+      const response = await fetch(`https://spotswap.stg.appscorridor.com/api/v1/stripe_connects/create_payment_intent`, {
+      // const response = await fetch(`https://admin.spotswap.app/api/v1/stripe_connects/create_payment_intent`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${await GetToken()}`,
+        },
+        body: JSON.stringify({
+          amount:amount,
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log("response", JSON.stringify(data.client_secret, null, 2));
+      const  clientSecret  = data.client_secret;
+      console.log("clientSecret>>>", clientSecret);
+  
+      return clientSecret;
+    } catch (error) {
+      console.error('Error fetching payment intent client secret:', error);
+      throw error;
+    }
+  };
+  
+  const pay = async values => {
+    console.log("pay amount ",values?.amount);
+    try {
+      const clientSecret = await fetchPaymentIntentClientSecret(values?.amount);
+      const { error, paymentIntent } = await confirmPlatformPayPayment(
+        clientSecret,
+        {
+          applePay: {
+            cartItems: [
+              {
+                label: 'TopUp',
+                amount:values?.amount,
+                paymentType: PlatformPay.PaymentType.Immediate,
+              },
+            ],
+            merchantCountryCode: 'US',
+            currencyCode: 'USD',
+            // requiredShippingAddressFields: [
+            //   PlatformPay.ContactField.PostalAddress,
+            // ],
+            // requiredBillingContactFields: [PlatformPay.ContactField.PhoneNumber],
+          },
+          googlePay: {
+
+            cartItems: [
+              {
+                label: 'TopUp',
+                amount:values?.amount,
+                paymentType: PlatformPay.PaymentType.Immediate,
+              },
+            ],
+            testEnv: true,
+            merchantName: 'merchant.com.SpotSwap',
+            merchantCountryCode: 'US',
+            currencyCode: 'USD',
+            // billingAddressConfig: {
+            //   format: PlatformPay.BillingAddressFormat.Full,
+            //   isPhoneNumberRequired: true,
+            //   isRequired: true,
+            // },
+          },
+        }
+        
+      );
+  
+      if (error) {
+        console.error('Payment error:', error);
+        // handle error
+      } else {
+        setTimeout(() => {
+        setShowAppModal(true);
+      }, 500);
+        // Alert.alert('Success', 'Check the logs for payment intent details.');
+        console.log('PaymentIntent:', JSON.stringify(paymentIntent, null, 2));
+        updateWallet(values?.amount);
+      }
+    } catch (error) {
+      console.error('Error during payment process:', error);
+    }
+  };
+  
+  const updateWallet = async (amount) => {
+    console.log("updateWallet amount ",amount);
+    try {
+      const response = await fetch(`https://spotswap.stg.appscorridor.com/api/v1/stripe_connects/update_wallet`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${await GetToken()}`,
+        },
+        body: JSON.stringify({
+          amount: amount,
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(` update waalett HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log("response", JSON.stringify(data, null, 2));
+     
+  
+      return;
+    } catch (error) {
+      console.error('update waalett', error);
+      throw error;
+    }
+  };
 
   return (
     <ImageBackground style={styles.rootContainer} source={appImages.app_bg}>
@@ -109,7 +245,8 @@ const TopUp = ({navigation}) => {
         innerRef={formikRef}
         initialValues={topUpField}
         onSubmit={values => {
-          handleTopUp(values);
+          // handleTopUp(values);
+          pay(values);
         }}
         validationSchema={topUpVS}>
         {({
@@ -164,8 +301,11 @@ const TopUp = ({navigation}) => {
             <View style={styles.bottomView}>
               <AppButton
                 title="Submit"
-                onPress={() => {
-                  handleSubmit();
+                onPress={() => {isSport?
+                  handleSubmit()
+                  // pay();
+
+                  :Alert.alert("This device is not supported for Apple Pay.")
                 }}
               />
             </View>

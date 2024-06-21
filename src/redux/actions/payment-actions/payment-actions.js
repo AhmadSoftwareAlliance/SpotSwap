@@ -66,6 +66,15 @@ export const topUpRequest = (params, cbSuccess, cbFailure) => {
     cbFailure,
   };
 };
+// with draw
+export const withDrawRequest = (params, cbSuccess, cbFailure) => {
+  return {
+    type: TYPES.WITH_DRAW_REQUEST,
+    params,
+    cbSuccess,
+    cbFailure,
+  };
+};
 
 //Default Pay Method
 export const defaultPayMethodReq = (params, cbSuccess, cbFailure) => {

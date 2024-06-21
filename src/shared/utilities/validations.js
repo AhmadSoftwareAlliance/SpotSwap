@@ -68,6 +68,7 @@ export const ticketFormField = {
 
 export const descFormField = {
   discription: '',
+  amount: '',
 };
 
 export const cardFormField = {
@@ -231,4 +232,9 @@ export const topUpVS = yup.object().shape({
 
 export const descVs = yup.object().shape({
   discription: yup.string().optional('Description Required'),
+  amount: yup
+    .number()
+    .typeError('Invalid amount')
+    .required('Amount Required')
+    .label('amount'),
 });

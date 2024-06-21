@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, ImageBackground, FlatList, Alert} from 'react-native';
+import {Text, View, ImageBackground, FlatList, Alert, Linking} from 'react-native';
 import {useIsFocused} from '@react-navigation/core';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -15,7 +15,9 @@ import styles from './styles';
 
 // redux stuff
 import {useDispatch, useSelector} from 'react-redux';
-import {getWalletDetailsRequest} from '../../../../redux/actions';
+import {getWalletDetailsRequest,withDrawRequest} from '../../../../redux/actions';
+import { GetToken } from '../../../../shared/utilities/headers';
+
 
 let count = 0;
 
@@ -28,7 +30,7 @@ const Wallet = ({navigation}) => {
   // redux stuff
   const dispatch = useDispatch(null);
   const { carInfo, userProfile } = useSelector(state => state.profile);
-  console.log("carInfo",JSON.stringify(carInfo,null,2));
+  // console.log("carInfo",JSON.stringify(carInfo,null,2));
   useEffect(() => {
     if (count === 0) {
       count = 1;
@@ -39,7 +41,7 @@ const Wallet = ({navigation}) => {
   }, [isFocus]);
 
   const getWalletDetails = loading => {
-    setIsLoading(loading);
+    // setIsLoading(loading);
     dispatch(
       getWalletDetailsRequest(
         async res => {
@@ -58,6 +60,95 @@ const Wallet = ({navigation}) => {
         },
       ),
     );
+  };
+  // const withDrawWallet = async (amount) => {
+  //   console.log("withDraw amount ");
+  //   try {
+  //     const response = await fetch(`https://spotswap.stg.appscorridor.com/api/v1/wallets/withdraw_amount_from_wallet`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: `Bearer ${await GetToken()}`,
+  //       },
+  //       body: JSON.stringify({
+  //         amount: 1,
+  //       }),
+  //     });
+  
+  //     if (!response.ok) {
+  //       throw new Error(` withDraw HTTP error! status: ${response.status}`);
+  //     }
+  
+  //     const data = await response;
+  //     console.log("response", JSON.stringify(data, null, 2));
+     
+  
+  //     return;
+  //   } catch (error) {
+  //     console.error('withDraw waalett', error.message);
+  //     if (
+  //       error[0] ===
+  //         'Your Stripe Connect Account data is missing or invalid, Please provide valid data.' ||
+  //         error[0] ===
+  //         'Your Account status is Pending. Please wait, it may take a few minutes.' ||
+  //         error[0] === 'Please Complete your Account Details.'
+  //     ) {
+  //       Alert.alert('Top Up Fail', error, [
+  //         {
+  //           text: 'Cancel',
+  //         },
+  //         {
+  //           text: 'Set Up',
+  //           onPress: () => {
+  //             Linking.openURL(error[1]);
+  //           },
+  //         },
+  //       ]);
+  //     } else {
+  //       alert(error);
+  //     }
+  //     throw error;
+  //   }
+  // };
+  const handleWithDraw = async values => {
+    // setIsLoading(true);
+    var params = new FormData();
+    params.append('amount', 1);
+   
+    const onSuccess = res => {
+      console.log("res on topup",JSON.stringify(res,null,2));
+      setIsLoading(false);
+     
+      // setTimeout(() => {
+      //   setShowAppModal(true);
+      // }, 500);
+    };
+    const onFailure = err => {
+      console.log('Error ==> ', err);
+      setIsLoading(false);
+      if (
+        err[0] ===
+          'Your Stripe Connect Account data is missing or invalid, Please provide valid data.' ||
+        err[0] ===
+          'Your Account status is Pending. Please wait, it may take a few minutes.' ||
+        err[0] === 'Please Complete your Account Details.'
+      ) {
+        Alert.alert('Top Up Fail', err[0], [
+          {
+            text: 'Cancel',
+          },
+          {
+            text: 'Set Up',
+            onPress: () => {
+              Linking.openURL(err[1]);
+            },
+          },
+        ]);
+      } else {
+        alert(err);
+      }
+    };
+    dispatch(withDrawRequest(params, onSuccess, onFailure));
   };
 
   const renderItem = ({item}) => (
@@ -95,8 +186,18 @@ const Wallet = ({navigation}) => {
               },
             ]))}
           />
+        
         </View>
       </ImageBackground>
+      {/* <AppButton
+            title="With Draw"
+            width={WP('33')}
+            height={WP('10')}
+            bgColor={colors.btn_gradient}
+            titleTxtStyle={styles.btnText}
+            // onPress={() => withDrawWallet()}
+            onPress={() => handleWithDraw()}
+          /> */}
       <Text style={styles.titleTxtStyle}>Recent Transactions</Text>
       {data && data?.length > 0 ? (
         <FlatList

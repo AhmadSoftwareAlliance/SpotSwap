@@ -38,10 +38,12 @@ export const profileUpdate = async params => {
       Authorization: `Bearer ${await GetToken()}`,
     },
   });
+  console.log("res>>>",res);
   return res.data;
 };
 
 export const registerUser = async params => {
+  console.log("rigister uswer end point",`${BASE_URL}${ENDPOINTS.REGISTER}`);
   const res = await axios.post(`${BASE_URL}${ENDPOINTS.REGISTER}`, params, {
     headers: {
       Accept: 'application/json',

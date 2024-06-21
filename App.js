@@ -7,6 +7,7 @@ import {
   WEB_CLIENT_ID_IOS,
   GOOGLE_MAPS_API_KEY,
   STRIPE_PUBLISHABLE_KEY,
+  BASE_URL,
 } from '@env';
 import {enableLatestRenderer} from 'react-native-maps';
 import MainNavigation from './src/navigation';
@@ -27,7 +28,7 @@ LogBox.ignoreLogs([
 
 let web_client_id = Platform.OS == 'ios' ? WEB_CLIENT_ID_IOS : WEB_CLIENT_ID;
 
-console.log("web_client_id",STRIPE_PUBLISHABLE_KEY);
+console.log("web_client_id",BASE_URL);
 // fb setup
 Settings.setAppID(FB_ID);
 Settings.initializeSDK();
@@ -54,7 +55,9 @@ const App = () => {
         barStyle={'light-content'}
         backgroundColor={'transparent'}
       />
-      <StripeProvider publishableKey={STRIPE_PUBLISHABLE_KEY}>
+      <StripeProvider publishableKey={STRIPE_PUBLISHABLE_KEY}
+       merchantIdentifier="merchant.com.SpotSwap"
+      >
         <PersistGate persistor={persistor}>
           <MainNavigation />
         </PersistGate>

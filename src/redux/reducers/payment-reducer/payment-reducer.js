@@ -97,6 +97,20 @@ const paymentReducer = (state = initialState, actions) => {
         isSuccess: false,
         isFailure: true,
       };
+    case TYPES.WITH_DRAW_REQUEST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isSuccess: true,
+        isFailure: false,
+      };
+    case TYPES.WITH_DRAW_REQUEST_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        isSuccess: false,
+        isFailure: true,
+      };
     case TYPES.DEFAULT_PAY_METHOD_REQ_SUCCESS:
       return {
         ...state,

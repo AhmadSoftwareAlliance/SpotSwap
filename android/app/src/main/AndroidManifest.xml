@@ -48,6 +48,9 @@
                   android:value="false"/>
       <meta-data android:name="com.dieam.reactnativepushnotification.notification_color"
                   android:resource="@color/white"/>
+                   <meta-data
+                          android:name="com.google.android.gms.wallet.api.enabled"
+                             android:value="true" />
       <receiver 
         android:exported="true"
         android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationActions" />
