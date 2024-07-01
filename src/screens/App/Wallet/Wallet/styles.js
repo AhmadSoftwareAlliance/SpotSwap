@@ -26,12 +26,13 @@ const styles = StyleSheet.create({
     fontSize: size.xxlarge,
     fontFamily: family.SFProText_SemiBold,
   },
-  bgImg: {
+  bgImg2: {
     width: WP('92'),
     borderRadius: 10,
     overflow: 'hidden',
     alignSelf: 'center',
-    height: platformOrientedCode(WP('50'), WP('46')),
+    height: platformOrientedCode(WP('70'), WP('56')),
+    paddingHorizontal:WP(3)
   },
   textStyle: {
     color: colors.white,
@@ -58,6 +59,54 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     color: colors.white,
     fontSize: size.xsmall,
+  },
+  modalContainer: {
+    width: '95%',
+    borderRadius: 20,
+    alignSelf: 'center',
+    alignItems: 'center',
+    paddingBottom: WP('1.5'),
+    justifyContent: 'center',
+    backgroundColor: 'white',
+  },
+  iconContainer: {
+    width: '100%',
+    alignItems: 'flex-end',
+    padding: platformOrientedCode(WP('3'), 0),
+  },
+  iconStyle: {
+    padding: WP('3'),
+  },
+  titleTxtStyle2: isButton => {
+    return {
+      color: colors.b1,
+      textAlign: 'center',
+      fontSize: size.xxlarge,
+      paddingHorizontal: WP('6.5'),
+      fontFamily: family.SFProText_SemiBold,
+      paddingTop: isButton ? WP('7.5') : WP('1'),
+    };
+  },
+  descTxtStyle: isDesc => {
+    return {
+      color: colors.b1,
+      textAlign: 'center',
+      paddingTop: WP('3.5'),
+      fontSize: size.normal,
+      paddingHorizontal: WP('6.5'),
+      paddingBottom: isDesc ? WP('5') : 0,
+      fontFamily: family.SFProText_Regular,
+    };
+  },
+  cancelTxtStyle: {
+    color: colors.b3,
+    paddingTop: WP('4'),
+    fontSize: size.normal,
+    paddingBottom: WP('5'),
+    fontFamily: family.SFProText_Regular,
+  },
+  contentContainer: {
+    flexGrow: 1,
   },
 });
 

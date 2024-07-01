@@ -119,8 +119,8 @@ const TopUp = ({navigation}) => {
   const fetchPaymentIntentClientSecret = async (amount) => {
     console.log("fetchPaymentIntentClientSecret amount",amount);
     try {
-      const response = await fetch(`https://spotswap.stg.appscorridor.com/api/v1/stripe_connects/create_payment_intent`, {
-      // const response = await fetch(`https://admin.spotswap.app/api/v1/stripe_connects/create_payment_intent`, {
+      // const response = await fetch(`https://spotswap.stg.appscorridor.com/api/v1/stripe_connects/create_payment_intent`, {
+      const response = await fetch(`https://admin.spotswap.app/api/v1/stripe_connects/create_payment_intent`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -178,7 +178,7 @@ const TopUp = ({navigation}) => {
                 paymentType: PlatformPay.PaymentType.Immediate,
               },
             ],
-            testEnv: true,
+            testEnv: false,
             merchantName: 'merchant.com.SpotSwap',
             merchantCountryCode: 'US',
             currencyCode: 'USD',
@@ -211,7 +211,8 @@ const TopUp = ({navigation}) => {
   const updateWallet = async (amount) => {
     console.log("updateWallet amount ",amount);
     try {
-      const response = await fetch(`https://spotswap.stg.appscorridor.com/api/v1/stripe_connects/update_wallet`, {
+      // const response = await fetch(`https://spotswap.stg.appscorridor.com/api/v1/stripe_connects/update_wallet`, {
+      const response = await fetch(`https://admin.spotswap.app/api/v1/stripe_connects/update_wallet`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -268,9 +269,10 @@ const TopUp = ({navigation}) => {
                 privilege of having a quick connection between SpotSwap users.
                 {'\n'}
                 {'\n'}
-                Please be advised that money in the wallet is not refundable and
+                {/* Please be advised that money in the wallet is not refundable and
                 can’t be withdrawn back. By selecting “Ok” mean you agree to
-                this condition.
+                this condition. */}
+                Please be advised that money in the wallet is not refundable but you can withdraw back. Minimum withdrawal limit is $50
               </Text>
               <Spacer androidVal={WP('10')} iOSVal={WP('10')} />
               <AppInput

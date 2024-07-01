@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {appIcons, colors, family, size, WP} from '../../shared/exporter';
 
-export const TransactionsCard = ({title, type, price}) => {
+export const TransactionsCard = ({title, type, price,des}) => {
   return (
     <View style={styles.mainCintainer}>
       <Image
@@ -13,8 +13,11 @@ export const TransactionsCard = ({title, type, price}) => {
       <View style={styles.rowContainer}>
         <View style={styles.innerContainer}>
           <Text style={styles.topUpText}>{title}</Text>
-          <Text style={styles.subText}>
+          {/* <Text style={styles.subText}>
             {type === 'credited' ? 'Bank Transfer' : 'SpotSwap'}
+          </Text> */}
+          <Text style={styles.subText}>
+            {des === 'spot_swap' ?'SpotSwap':des==="bank_transfer"?"Bank Transfer":"WithDraw"}
           </Text>
         </View>
         <Text style={styles.priceText}>{price}</Text>

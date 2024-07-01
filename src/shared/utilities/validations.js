@@ -80,6 +80,7 @@ export const cardFormField = {
 export const topUpField = {
   amount: '',
   referralCode: '',
+
 };
 
 export const payPalDetailFormField = {
