@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     overflow: 'hidden',
     alignSelf: 'center',
-    height: platformOrientedCode(WP('70'), WP('56')),
+    height: platformOrientedCode(WP('70'), WP('66')),
     paddingHorizontal:WP(3)
   },
   textStyle: {

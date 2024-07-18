@@ -178,7 +178,9 @@ const Register = ({navigation}) => {
           } else {
             if (res?.user?.profile_complete) {
               await AsyncStorage.setItem('login', 'true');
-              navigation.replace('App');
+              setTimeout(() => {
+                navigation.replace('App');
+              }, 1000);
             } else {
               navigation.navigate('AddCarInfo');
             }

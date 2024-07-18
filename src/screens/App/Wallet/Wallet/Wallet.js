@@ -284,6 +284,7 @@ const Wallet = ({navigation}) => {
             title="Withdraw"
             width={WP('33')}
             height={WP('10')}
+            image={true}
             bgColor={colors.btn_gradient}
             titleTxtStyle={styles.btnText}
             // onPress={() => withDrawWallet()}
@@ -291,7 +292,7 @@ const Wallet = ({navigation}) => {
             // onPress={() =>values.amount>50?  handleSubmit():Alert.alert("Add minimum $50")}
             onPress={() =>values.amount>=50?  handleSubmit():Alert.alert("Minimum withdrawal amount is $50")}
           />
-           <Spacer androidVal={WP('2')} iOSVal={WP('2')} />
+           <Spacer androidVal={WP('2')} iOSVal={WP('4')} />
             </View>
            
           // </KeyboardAwareScrollView>

@@ -17,6 +17,8 @@ export const appImages = {
   app_bg: require('../../assets/images/app_bg.png'),
   splash_bg: require('../../assets/images/splash_bg.png'),
   wallet_bg: require('../../assets/images/wallet_bg.png'),
+  GooglePay: require('../../assets/images/GPay_Acceptance_Mark_800.png'),
+  ApplePay: require('../../assets/images/applePay.png'),
   david: require('../../assets/images/David.png'),
   profile: require('../../assets/images/dummyProfile.jpg'),
 };

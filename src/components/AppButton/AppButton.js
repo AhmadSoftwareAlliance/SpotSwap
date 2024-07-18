@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {Text, TouchableOpacity, StyleSheet,Image,View, Platform} from 'react-native';
 import {Icon} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import {
@@ -8,6 +8,7 @@ import {
   colors,
   family,
   platformOrientedCode,
+  appImages,
 } from '../../shared/exporter';
 
 const AppButton = ({
@@ -21,6 +22,7 @@ const AppButton = ({
   width = WP('60'),
   height = WP('14'),
   borderColor = colors.s3,
+  image,
 }) => {
   return (
     <TouchableOpacity
@@ -28,6 +30,7 @@ const AppButton = ({
       activeOpacity={0.7}
       onPress={onPress}
       style={{opacity: disabled ? 0.5 : 1}}>
+        {!image?
       <LinearGradient
         colors={bgColor ? bgColor : colors.b_gradient}
         style={styles.buttonContainer(width, height, borderColor)}>
@@ -42,6 +45,12 @@ const AppButton = ({
           <Text style={[styles.btnTxtStyle, titleTxtStyle]}>{title}</Text>
         )}
       </LinearGradient>
+      :<View style={styles.btnOuter}>
+        <Text style={styles.btnImageText}>Withdraw with</Text>
+        <Image source={Platform.OS=="ios"?appImages.ApplePay: appImages.GooglePay}
+      resizeMode="center"
+      style={styles.Googlebtn}/>
+        </View>}
     </TouchableOpacity>
   );
 };
@@ -68,6 +77,24 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       height: platformOrientedCode(55, 55),
     };
+  },
+  Googlebtn:{
+    width:WP('33'),
+    height:WP('10')
+  },
+  btnOuter:{
+flexDirection:'row',
+backgroundColor:"#ffff",
+alignItems:'center',
+justifyContent:'center',
+borderRadius: 10,
+
+height : WP('14'),
+  },
+  btnImageText:{
+    color: "black",
+    fontSize: size.large,
+    fontFamily: family.SFProText_Light,
   },
   btnTxtStyle: {
     textAlign: 'right',
