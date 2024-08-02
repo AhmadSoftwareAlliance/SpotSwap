@@ -46,7 +46,7 @@ const AppButton = ({
         )}
       </LinearGradient>
       :<View style={styles.btnOuter}>
-        <Text style={styles.btnImageText}>Withdraw with</Text>
+        <Text style={styles.btnImageText}>Top Up with</Text>
         <Image source={Platform.OS=="ios"?appImages.ApplePay: appImages.GooglePay}
       resizeMode="center"
       style={styles.Googlebtn}/>

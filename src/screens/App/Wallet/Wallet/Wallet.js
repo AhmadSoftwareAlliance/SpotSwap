@@ -35,6 +35,7 @@ const Wallet = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showAppModal, setShowAppModal] = useState(false);
   const [showAppModal2, setShowAppModal2] = useState(false);
+  const [showAppModal3, setShowAppModal3] = useState(false);
   // redux stuff
   const dispatch = useDispatch(null);
   const { carInfo, userProfile } = useSelector(state => state.profile);
@@ -195,14 +196,15 @@ const Wallet = ({navigation}) => {
             height={WP('10')}
             bgColor={colors.btn_gradient}
             titleTxtStyle={styles.btnText}
-            onPress={() => (userProfile?.profile_complete? navigation.navigate('TopUp'):Alert.alert("",'Go to settings and update Car Info first.', [
-              {
-                text: 'OK',
-                onPress: () => {
-                  // navigation.navigate('Settings');
-                },
-              },
-            ]))}
+            onPress={() => setShowAppModal3(true)}
+            // onPress={() => (userProfile?.profile_complete? navigation.navigate('TopUp'):Alert.alert("",'Go to settings and update Car Info first.', [
+            //   {
+            //     text: 'OK',
+            //     onPress: () => {
+            //       // navigation.navigate('Settings');
+            //     },
+            //   },
+            // ]))}
           />
            <Spacer androidVal={WP('5')} iOSVal={WP('5')} />
            <AppButton
@@ -284,13 +286,80 @@ const Wallet = ({navigation}) => {
             title="Withdraw"
             width={WP('33')}
             height={WP('10')}
-            image={true}
+            // image={true}
             bgColor={colors.btn_gradient}
             titleTxtStyle={styles.btnText}
             // onPress={() => withDrawWallet()}
             // onPress={() => handleWithDraw()}
             // onPress={() =>values.amount>50?  handleSubmit():Alert.alert("Add minimum $50")}
             onPress={() =>values.amount>=50?  handleSubmit():Alert.alert("Minimum withdrawal amount is $50")}
+          />
+           <Spacer androidVal={WP('2')} iOSVal={WP('4')} />
+            </View>
+           
+          // </KeyboardAwareScrollView>
+        )}
+      </Formik>
+         </ImageBackground>
+        {/* </View> */}
+      </Modal>
+      )}
+      {showAppModal3 && (
+        <Modal  isVisible={showAppModal3}>
+        {/* <View style={styles.modalContainer}> */}
+        <ImageBackground
+        source={appImages.wallet_bg}
+        resizeMode="cover"
+        style={styles.bgImg3}>
+        <View style={styles.iconContainer}>
+            <Icon
+              type={'entypo'}
+              name={'cross'}
+              size={22}
+              color={colors.g2}
+              style={styles.iconStyle}
+              onPress={() => setShowAppModal3(false)}
+            />
+          </View>
+        <Formik
+        innerRef={formikRef}
+        initialValues={topUpField}
+        onSubmit={values => {
+          // handleTopUp(values);
+          // handleWithDraw(values);
+        }}
+        validationSchema={topUpVS}>
+        {({
+          values,
+          errors,
+          touched,
+          handleSubmit,
+          handleChange,
+          setFieldTouched,
+        }) => (
+          // <KeyboardAwareScrollView
+          //   contentContainerStyle={styles.scrollViewStyle}
+          //   showsVerticalScrollIndicator={false}>
+            <View style={styles.contentContainer}>
+              <Spacer androidVal={WP('5')} iOSVal={WP('5')} />
+             
+              
+              <AppButton
+            title="Top Up"
+            width={WP('33')}
+            height={WP('10')}
+            image={true}
+            bgColor={colors.btn_gradient}
+            titleTxtStyle={styles.btnText}
+            onPress={() => (setShowAppModal3(false),(userProfile?.profile_complete? navigation.navigate('TopUp'):Alert.alert("",'Go to settings and update Car Info first.', [
+              {
+                text: 'OK',
+                onPress: () => {
+                  // navigation.navigate('Settings');
+                },
+              },
+            ])))}
+            // onPress={() =>values.amount>=50?  handleSubmit():Alert.alert("Minimum withdrawal amount is $50")}
           />
            <Spacer androidVal={WP('2')} iOSVal={WP('4')} />
             </View>

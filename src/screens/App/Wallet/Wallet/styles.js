@@ -34,6 +34,14 @@ const styles = StyleSheet.create({
     height: platformOrientedCode(WP('70'), WP('66')),
     paddingHorizontal:WP(3)
   },
+  bgImg3: {
+    width: WP('92'),
+    borderRadius: 10,
+    overflow: 'hidden',
+    alignSelf: 'center',
+    height: platformOrientedCode(WP('45'), WP('45')),
+    paddingHorizontal:WP(3)
+  },
   textStyle: {
     color: colors.white,
     fontSize: size.xsmall,
