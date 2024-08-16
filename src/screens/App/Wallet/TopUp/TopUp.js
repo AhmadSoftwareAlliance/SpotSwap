@@ -21,7 +21,7 @@ import {
   AppLoader,
 } from '../../../../components';
 import styles from './styles';
-
+import {BASE_URL} from '@env';
 // redux stuff
 import {useDispatch} from 'react-redux';
 import {topUpRequest} from '../../../../redux/actions';
@@ -119,8 +119,8 @@ const TopUp = ({navigation}) => {
   const fetchPaymentIntentClientSecret = async (amount) => {
     console.log("fetchPaymentIntentClientSecret amount",amount);
     try {
-      // const response = await fetch(`https://spotswap.stg.appscorridor.com/api/v1/stripe_connects/create_payment_intent`, {
-      const response = await fetch(`https://admin.spotswap.app/api/v1/stripe_connects/create_payment_intent`, {
+      const response = await fetch(`${BASE_URL}stripe_connects/create_payment_intent`, {
+      // const response = await fetch(`https://admin.spotswap.app/api/v1/stripe_connects/create_payment_intent`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -178,7 +178,7 @@ const TopUp = ({navigation}) => {
                 paymentType: PlatformPay.PaymentType.Immediate,
               },
             ],
-            testEnv: false,
+            testEnv: true,
             merchantName: 'merchant.com.SpotSwap',
             merchantCountryCode: 'US',
             currencyCode: 'USD',
@@ -211,8 +211,8 @@ const TopUp = ({navigation}) => {
   const updateWallet = async (amount) => {
     console.log("updateWallet amount ",amount);
     try {
-      // const response = await fetch(`https://spotswap.stg.appscorridor.com/api/v1/stripe_connects/update_wallet`, {
-      const response = await fetch(`https://admin.spotswap.app/api/v1/stripe_connects/update_wallet`, {
+      const response = await fetch(`${BASE_URL}stripe_connects/update_wallet`, {
+      // const response = await fetch(`https://admin.spotswap.app/api/v1/stripe_connects/update_wallet`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -30,7 +30,7 @@ export const createParkingSpot = async params => {
       Authorization: `Bearer ${await GetToken()}`,
     },
   });
-  console.log("res.data on craete spot", JSON.stringify(res.data, null, 2));
+  console.log("res.data on craete spot", JSON.stringify(res, null, 2));
   return res.data;
   // }
   // catch(error) {

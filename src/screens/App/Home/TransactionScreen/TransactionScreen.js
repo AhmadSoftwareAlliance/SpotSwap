@@ -291,9 +291,9 @@ console.log("data on transection screen",JSON.stringify(data,null,2));
             <Row title="Location" val={address} />
           </View>
           <View style={styles.boxView}>
-            {/* <Row title="Swapper Fee" val="$10.00" />
-            <Row title="SpotSwap Fee" val="$1.00" /> */}
-            <Row title="Total" val={`$${total}`} />
+            <Row title="Swapper Fee" val="$11.00" />
+            {/* <Row title="SpotSwap Fee" val="$1.00" /> */}
+            {/* <Row title="Total" val={`$${total}`} /> */}
           </View>
         </View>
       </KeyboardAwareScrollView>
@@ -302,7 +302,7 @@ console.log("data on transection screen",JSON.stringify(data,null,2));
           <AppButton title="Done" onPress={() => setShowAppModal(true)} />
         ) : (
           <AppButton
-            title={`Pay $${total}`}
+            title={`Pay $${11}`}
             onPress={() => {
               paymentType === 'paypal'
                 ? handlePayPalPayment()

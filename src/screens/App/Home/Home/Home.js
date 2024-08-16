@@ -36,7 +36,7 @@ import {
   NotificationListener,
 } from '../../../../shared/exporter';
 import { styles } from './styles';
-
+import {createSpotReq} from '../../../../redux/actions';
 // redux stuff
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -69,6 +69,8 @@ const Home = ({ navigation }) => {
   });
   const [address, setAddress] = useState('');
   const [carImage, setCarImage] = useState('');
+  console.log("carImage",carImage);
+  
   const [isLoading, setIsLoading] = useState(false);
   const [destination, setDestination] = useState('');
   const [hasArrived, setHasArrived] = useState(false);
@@ -321,6 +323,66 @@ const Home = ({ navigation }) => {
     }, 400);
   };
 
+  const handleSaveInfo =() => {
+    setIsLoading(true);
+    // let {carImage, latitude, longitude, address} = route?.params?.item;
+
+    const params = new FormData();
+    params.append('latitude', region.latitude);
+    params.append('longitude', region.longitude);
+    params.append('address', address || 'Address is not found');
+    // params.append('description', values?.discription);
+    params.append('description', "");
+    // params.append('amount', values?.amount);
+    if (carImage) {
+      params.append('image', {
+        uri: Platform.OS === 'ios' ? carImage?.path : carImage?.path,
+        name: carImage?.filename || 'image',
+        type: carImage?.mime,
+      });
+    }
+    console.log("form data",JSON.stringify(params,null,2));
+    dispatch(
+      createSpotReq(
+        params,
+        res => {
+          setIsLoading(false);
+          // formikRef.current?.resetForm();
+          setTimeout(()=>{
+            navigation.replace('ActivateSpot', {
+              activated: false,
+              slot: res?.parking_slot,
+            });
+          },1000)
+         
+        },
+        err => {
+          setIsLoading(false);
+          console.log('Error ==>1111 ', err);
+          if (
+            err ===
+            'You have not any Account Setup for Payment , Please Add it first.'||
+            err ===
+            'Your Stripe Connect Account data is missing or invalid, Please provide valid data.' ||
+          err ===
+            'Your Account status is Pending. Please wait, it may take a few minutes.' ||
+          err === 'Please Complete your Account Details.'
+          ) {
+            Alert.alert('Failure', err, [
+              {text: 'Cancel'},
+              {
+                text: 'OK',
+                onPress: () =>
+                  navigation.navigate('Profile', {screen: 'AddPaymentMethod'}),
+              },
+            ]);
+          } else {
+            alert(err);
+          }
+        },
+      ),
+    );
+  };
   return (
     <View style={styles.rootContainer}>
       <AppLoader loading={isLoading} />
@@ -471,15 +533,49 @@ const Home = ({ navigation }) => {
             bgColor={colors.s_gradient}
             borderColor={'transparent'}
             titleTxtStyle={styles.btnTxtStyle}
-            onPress={() => (userProfile?.profile_complete? navigation.navigate('FindSpot'): Alert.alert("",'Go to settings and update Car Info first.', [
-              {
-                text: 'OK',
-                onPress: () => {
-                  // navigation.navigate('Settings');
-                },
-              },
-            ]))}
-          />
+            // onPress={() => (userProfile?.profile_complete? navigation.navigate('FindSpot'): Alert.alert("",'Go to settings and update Car Info first.', [
+            //   {
+            //     text: 'OK',
+            //     onPress: () => {
+            //       // navigation.navigate('Settings');
+            //     },
+            //   },
+            // ]))}
+            onPress={() => {
+              if (userProfile?.profile_complete) {
+                if (walletAmount < 11) {
+                  Alert.alert(
+                    "",
+                    "You don't have sufficient balance to avail slot.\nPlease top-up first.",
+                    [
+                      {
+                        text: "OK",
+                        onPress: () => {
+                          // Optionally navigate to add funds screen or perform another action
+                        },
+                      },
+                    ]
+                  );
+                } else {
+                  navigation.navigate('FindSpot');
+                }
+              } else {
+                Alert.alert(
+                  "",
+                  "Go to settings and update Car Info first.",
+                  [
+                    {
+                      text: "OK",
+                      onPress: () => {
+                        // Optionally navigate to settings screen or perform another action
+                      },
+                    },
+                  ]
+                );
+              }
+            }}
+            />
+          
           <View style={styles.btnsSpacer} />
           <AppButton
             width={WP('45')}
@@ -510,14 +606,18 @@ const Home = ({ navigation }) => {
           onHide={() => setShowAppModal(false)}
           onPressHide={() => {
             setShowAppModal(false);
-            navigation.navigate('AddDescription', {
-              item: {
-                carImage: '',
-                latitude: region.latitude,
-                longitude: region.longitude,
-                address: address,
-              },
-            });
+            setTimeout(() => {
+              handleSaveInfo()
+            }, 200);
+           
+            // navigation.navigate('AddDescription', {
+            //   item: {
+            //     carImage: '',
+            //     latitude: region.latitude,
+            //     longitude: region.longitude,
+            //     address: address,
+            //   },
+            // });
           }}
         />
       )}
@@ -530,14 +630,18 @@ const Home = ({ navigation }) => {
           title={'Your pic has been saved!'}
           onPress={() => {
             setShowPicTakenModal(false);
-            navigation.navigate('AddDescription', {
-              item: {
-                carImage: carImage,
-                latitude: region.latitude,
-                longitude: region.longitude,
-                address: address,
-              },
-            });
+            setTimeout(() => {
+              handleSaveInfo()
+            }, 200);
+           
+            // navigation.navigate('AddDescription', {
+            //   item: {
+            //     carImage: carImage,
+            //     latitude: region.latitude,
+            //     longitude: region.longitude,
+            //     address: address,
+            //   },
+            // });
           }}
           desc={
             'This photo will be used when you make your parking lot available.'

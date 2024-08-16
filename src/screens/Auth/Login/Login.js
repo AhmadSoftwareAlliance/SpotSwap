@@ -69,7 +69,11 @@ const Login = ({ navigation }) => {
               }, 1000);
   
             } else {
-              navigation.navigate('AddCarInfo');
+              // navigation.navigate('AddCarInfo');
+              await AsyncStorage.setItem('login', 'true');
+              setTimeout(() => {
+                navigation.replace('App');
+              }, 500);
             }
           }
          
@@ -182,7 +186,9 @@ const Login = ({ navigation }) => {
           if (!res?.user?.is_info_complete) {
             if(Platform.OS==="ios"){
               await AsyncStorage.setItem('login', 'true');
-              navigation.navigate('App');
+              setTimeout(() => {
+                navigation.replace('App');
+              }, 500);
             }else{
               navigation.navigate('SocialRegister', {item: res?.user});
             }
@@ -193,7 +199,11 @@ const Login = ({ navigation }) => {
                 navigation.replace('App');
               }, 1000);
             } else {
-              navigation.navigate('AddCarInfo');
+              // navigation.navigate('AddCarInfo');
+              await AsyncStorage.setItem('login', 'true');
+              setTimeout(() => {
+                navigation.replace('App');
+              }, 500);
             }
           }
         },

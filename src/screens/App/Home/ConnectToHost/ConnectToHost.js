@@ -385,7 +385,7 @@ const ConnectToHost = ({navigation, route}) => {
       </View>
       <View style={styles.bottomView}>
         <View style={styles.boxContainer}>
-          <Text style={styles.etaTxtStyle2}>Spot Fare ${total}</Text>
+          {/* <Text style={styles.etaTxtStyle2}>Spot Fare ${total}</Text> */}
           <Text style={styles.etaTxtStyle}>ETA</Text>
           <Text style={styles.timeTxtStyle}>{time ? time : '00:00:00'}</Text>
           {isConnected && (

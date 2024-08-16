@@ -58,14 +58,21 @@ const Register = ({navigation}) => {
     dispatch(
       signUpRequest(
         params,
-        res => {
-          console.log("res on login",res);
+       async res => {
+          console.log("res on register",res);
           setIsLoading(false);
           formikRef.current?.resetForm();
           if(Platform.OS=="ios"){
-            navigation.navigate('App');
+            await AsyncStorage.setItem('login', 'true');
+            setTimeout(() => {
+              navigation.replace('App');
+            }, 1000);
           }else{
-            navigation.navigate('AddCarInfo');
+            // navigation.navigate('AddCarInfo');
+            await AsyncStorage.setItem('login', 'true');
+            setTimeout(() => {
+              navigation.replace('App');
+            }, 500);
           }
          
         },
@@ -82,19 +89,24 @@ const Register = ({navigation}) => {
   };
 
   const handleGoogleLogin = async () => {
+
     try {
-      await GoogleSignin.signOut();
+      // await GoogleSignin.signOut();
       setIsLoading(true);
       // Get the users ID token
-      const {idToken} = await GoogleSignin.signIn();
+      await GoogleSignin.hasPlayServices();
+      console.log('okkkkk')
+      const { idToken } = await GoogleSignin.signIn();
+      console.log("idToken", idToken);
       if (idToken) {
         handleSocialLogin('google', idToken);
       } else {
         setIsLoading(false);
       }
     } catch (error) {
+      console.log("error ", error);
+      console.log("error code ", error.code);
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        console.log('cancel');
         setIsLoading(false);
       } else if (error.code === statusCodes.IN_PROGRESS) {
         setIsLoading(false);
@@ -156,47 +168,52 @@ const Register = ({navigation}) => {
  }
  };
 
-  const handleSocialLogin = (provider, token) => {
-    setIsLoading(true);
-    const params = new FormData();
-    params.append('token', token);
-    params.append('provider', provider);
-    dispatch(
-      socialLoginRequest(
-        params,
-        async res => {
-          console.log("res>>>",JSON.stringify(res,null,2));
-          setIsLoading(false);
-          if (!res?.user?.is_info_complete) {
-            if(Platform.OS="ios"){
-              await AsyncStorage.setItem('login', 'true');
-              navigation.navigate('App');
-            }else{
-              navigation.navigate('SocialRegister', {item: res?.user});
-            }
-           
-          } else {
-            if (res?.user?.profile_complete) {
-              await AsyncStorage.setItem('login', 'true');
-              setTimeout(() => {
-                navigation.replace('App');
-              }, 1000);
-            } else {
-              navigation.navigate('AddCarInfo');
-            }
+ const handleSocialLogin = (provider, token) => {
+  setIsLoading(true);
+  const params = new FormData();
+  params.append('token', token);
+  params.append('provider', provider);
+  dispatch(
+    socialLoginRequest(
+      params,
+      async res => {
+        console.log("response on social ", JSON.stringify(res, null, 2));
+        setIsLoading(false);
+        if (!res?.user?.is_info_complete) {
+          if(Platform.OS==="ios"){
+            await AsyncStorage.setItem('login', 'true');
+            setTimeout(() => {
+              navigation.replace('App');
+            }, 1000);
+          }else{
+            navigation.navigate('SocialRegister', {item: res?.user});
           }
-        },
-        err => {
-          setIsLoading(false);
-          Alert.alert('Login Fail', err, [
-            {
-              text: 'OK',
-            },
-          ]);
-        },
-      ),
-    );
-  };
+        } else {
+          if (res?.user?.profile_complete) {
+            await AsyncStorage.setItem('login', 'true');
+            setTimeout(() => {
+              navigation.replace('App');
+            }, 1000);
+          } else {
+            // navigation.navigate('AddCarInfo');
+            await AsyncStorage.setItem('login', 'true');
+            setTimeout(() => {
+              navigation.replace('App');
+            }, 500);
+          }
+        }
+      },
+      err => {
+        setIsLoading(false);
+        Alert.alert('Login Fail', err, [
+          {
+            text: 'OK',
+          },
+        ]);
+      },
+    ),
+  );
+};
 
   const setCountryValue = val => {
     setCountryCode(val.callingCode[0]);

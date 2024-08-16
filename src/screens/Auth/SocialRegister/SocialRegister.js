@@ -16,6 +16,7 @@ import styles from './styles';
 // redux stuff
 import {useDispatch} from 'react-redux';
 import {updateSocialProfileReq} from '../../../redux/actions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SocialRegister = ({navigation, route}) => {
   const paramdata = route?.params?.item;
@@ -39,10 +40,14 @@ const SocialRegister = ({navigation, route}) => {
     dispatch(
       updateSocialProfileReq(
         params,
-        res => {
+       async res => {
           setIsLoading(false);
           formikRef.current?.resetForm();
-          navigation.navigate('AddCarInfo');
+          // navigation.navigate('AddCarInfo');
+          await AsyncStorage.setItem('login', 'true');
+          setTimeout(() => {
+            navigation.replace('App');
+          }, 200);
         },
         err => {
           setIsLoading(false);

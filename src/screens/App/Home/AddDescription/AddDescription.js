@@ -29,7 +29,7 @@ const AddDescription = ({navigation, route}) => {
   const [isLoading, setIsLoading] = useState(false);
   let {carImage, latitude, longitude, address} = route?.params?.item;
   // redux stuff
-  console.log("carImage on discription",carImage);
+  // console.log("carImage on discription",carImage);
   const dispatch = useDispatch(null);
 
   const handleSaveInfo = values => {
@@ -41,7 +41,7 @@ const AddDescription = ({navigation, route}) => {
     params.append('longitude', longitude);
     params.append('address', address || 'Address is not found');
     params.append('description', values?.discription);
-    params.append('amount', values?.amount);
+    // params.append('amount', values?.amount);
     if (carImage) {
       params.append('image', {
         uri: Platform.OS === 'ios' ? carImage?.path : carImage?.path,
@@ -118,7 +118,7 @@ const AddDescription = ({navigation, route}) => {
             contentContainerStyle={styles.scrollViewStyle}>
             <View style={styles.contentContainer}>
               <Text style={styles.titleText}>Add Description</Text>
-              <Spacer androidVal={WP('3')} iOSVal={WP('3')} />
+              {/* <Spacer androidVal={WP('3')} iOSVal={WP('3')} />
               <AppInput
                 placeholder="Enter Amount"
                 title="Enter Amount"
@@ -129,7 +129,7 @@ const AddDescription = ({navigation, route}) => {
                 onBlur={() => setFieldTouched('amount')}
                 value={values.amount}
                 onChangeText={handleChange('amount')}
-              />
+              /> */}
                <Spacer androidVal={WP('3')} iOSVal={WP('3')} />
               <Text style={styles.msgText}>Optional</Text>
               <View style={styles.inputView}>
