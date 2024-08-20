@@ -178,7 +178,7 @@ const TopUp = ({navigation}) => {
                 paymentType: PlatformPay.PaymentType.Immediate,
               },
             ],
-            testEnv: true,
+            testEnv: false,
             merchantName: 'merchant.com.SpotSwap',
             merchantCountryCode: 'US',
             currencyCode: 'USD',

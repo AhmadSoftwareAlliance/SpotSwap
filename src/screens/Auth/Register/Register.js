@@ -186,7 +186,11 @@ const Register = ({navigation}) => {
               navigation.replace('App');
             }, 1000);
           }else{
-            navigation.navigate('SocialRegister', {item: res?.user});
+            await AsyncStorage.setItem('login', 'true');
+            setTimeout(() => {
+              navigation.replace('App');
+            }, 500);
+            // navigation.navigate('SocialRegister', {item: res?.user});
           }
         } else {
           if (res?.user?.profile_complete) {
